@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head th:include="baseHeader :: baseHeader">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+</head>
+<body style="background: url('https://ts1.cn.mm.bing.net/th/id/R-C.0cc2527e77bb2be5b2cf80c5631db205?rik=4en4ZTWxzaHI8g&riu=http%3a%2f%2fsc.68design.net%2fqita7%2fCDXCBJ%2fimages%2fSLHW_002020.jpg&ehk=t5DhrqnESFhkfCE0G1Q2trAAdNLU1RmHVsnqOkVygbk%3d&risl=&pid=ImgRaw&r=0')">
+
+<div class="top">
+    <div class="top_right">
+        <input type="hidden" id="userId" th:value="${session.userInfo.userId}">
+        <ul>
+            <a>
+                <li class="show_list">
+                    <span th:text="${session.userInfo.userName}" style="display: flex;
+                                 flex-wrap: nowrap;
+                                 align-content: center;
+                                 justify-content: center;
+                                 align-items: center;"></span>
+                    <ul class="move_list" style="padding-inline-start: 0px;margin-top: 0px;">
+                        <li>
+                            <span class="exit_login">退出</span>
+                        </li>
+
+                    </ul>
+                </li>
+            </a>
+        </ul>
+    </div>
+</div>
+
+<nav class="navbar navbar-vertical-left" th:include="base :: baseLeft"></nav>
+
+<div class="show-div" th:if="${session.userInfo.userLv} != '0'">
+
+    <div th:fragment="curriculumList">
+        <header class="htmleaf-header">
+            <h1>X X X 院 校 校 相 关 课 程 展 示<span>Exhibition of related courses in XXX University</span></h1>
+        </header>
+        <div class="add-search-div">
+            <div style="display: flex;justify-content: space-between;flex-direction: row;align-items: center;flex-wrap: nowrap;margin-right: 5%">
+                <div class="serach-div"
+                     style="
+                    display: flex;
+                    align-items: flex-start;
+                    justify-content: flex-start;
+                    flex-direction: row;
+                 ">
+                    <label class="select" for="slct" style=";margin-right: 10px">
+                        <select id="slct" required="required" class="curriculum_search_select">
+                            <option value="false" disabled="disabled" selected="selected">搜索：</option>
+                            <option th:if="${session.userInfo.userLv} == '2'" value="userAccount">搜索老师</option>
+                            <option value="curriculumName">搜索课程</option>
+                            <option value="place">搜索地点</option>
+                            <option value="introduce">搜索介绍</option>
+                        </select>
+                        <svg>
+                            <use xlink:href="#select-arrow-down"></use>
+                        </svg>
+                    </label>
+                    <!-- SVG Sprites-->
+                    <svg class="sprites">
+                        <symbol id="select-arrow-down" viewbox="0 0 10 6">
+                            <polyline points="1 1 5 5 9 1"></polyline>
+                        </symbol>
+                    </svg>
+                    <input   required='' name="cssinput" type='text' class="curriculum_search_value" style="height: 37.37px;width: 200px;margin-right: 10px">
+                    <button class="btn-shine curriculum_search_button" name="cssbutton" style="height: 37.37px;;margin-right: 10px">
+                        <span>搜索</span>
+                    </button>
+
+                </div>
+                <label th:if="${session.userInfo.userLv} == '1'" class="add-div">
+                    <button class="teacher_add_curriculum btn-pill" name="cssbutton" style="font-size: 13px;height: 37.37px;margin-right: 10px;">添加课程</button>
+                </label>
+            </div>
+
+        </div>
+
+
+        <div class="htmleaf-container" style="margin-top: 40px;">
+            <div style="display: flex;justify-content: space-between;align-items: center;margin-bottom: 10px">
+                <p style="margin-left: 0%;margin-bottom: 0px">
+                    <span th:if="${session.userInfo.userLv} != '1'">
+                        <span th:if="${#httpServletRequest.queryString != null && #httpServletRequest.queryString.contains('userAccount')}">按教师名称</span>
+                    </span>
+                    <span th:if="${#httpServletRequest.queryString != null && #httpServletRequest.queryString.contains('curriculumName')}">按课程名称</span>
+                    <span th:if="${#httpServletRequest.queryString != null && #httpServletRequest.queryString.contains('place')}">按地点</span>
+                    <span th:if="${#httpServletRequest.queryString != null && #httpServletRequest.queryString.contains('introduce')}">按简介</span>
+                    搜索：
+                    <label class="display_search_name">
+                        <script>
+                            var url = window.location.search;
+
+                            var searchParam = url.indexOf("=")+1;
+                            var searchParamEnd = url.indexOf("&");
+                            var pageNumParam = url.indexOf("pageNum");
+                            if (searchParamEnd == -1){
+                                url = url.substring(searchParam);
+                            }else{
+                                url = url.substring(searchParam,searchParamEnd);
+                            }
+
+                            if(pageNumParam == -1 || pageNumParam > searchParam){
+                                document.write(decodeURI(url));
+                            }
+
+                        </script>
+                    </label>
+                </p>
+                <div id="pageChange" th:if="${pageInfo.pageCount} != '-1'" style="display: flex;align-items: center;justify-content: flex-end;">
+                    <button class="btn-shine prevPage"  th:value="${pageInfo.prevPage}" name="cssbutton" style="height: 30px;width: 80px;">
+                        <span>前一页</span>
+                    </button>
+                    <div style="margin-right:10px;margin-left: 10px">
+                        第
+                        <input type="hidden" class="url" value="">
+                        <input type="hidden" class="pageNum" value="1">
+                        <label class="display_search_name" th:text="${pageInfo.displayPage}"></label>
+                        页 / 共
+                        <label th:text="${pageInfo.pageCount}"></label>
+                        页
+                    </div>
+                    <button class="btn-shine nextPage" th:value="${pageInfo.nextPage}" name="cssbutton" style="height: 30px;width: 80px">
+                        <span>后一页</span>
+                    </button>
+                    <script>
+                        var searchParam = window.location.search;
+                        var url = window.location.href;
+                        if (searchParam.indexOf("pageNum") == -1){
+                            searchParam = 1;
+                        }else{
+                            searchParam = searchParam.substring(searchParam.indexOf("pageNum")+8);
+                            url = url.substring(0,url.indexOf("pageNum"));
+                        }
+                        $('.url').val(url);
+
+                        $('.prevPage').attr('disabled',false);
+                        $('.nextPage').attr('disabled',false);
+                        if ($('.prevPage').val()==-1){
+                            $('.prevPage').attr('disabled',true);
+                        }
+                        if ($('.nextPage').val()==-1){
+                            $('.nextPage').attr('disabled',true);
+                        }
+
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="htmleaf-container table-wrapper" style="margin-top: 10px;overflow-x:scroll;">
+            <table class="fl-table">
+                <thead>
+                <tr>
+                    <th>课程ID</th>
+                    <th>教师名称</th>
+                    <th>课程名称</th>
+                    <th>课程地点</th>
+                    <th>课程介绍</th>
+                    <th>开始时间</th>
+                    <th>结束时间</th>
+                    <th>课时长度</th>
+                    <th>限定人数</th>
+                    <th>已有人数</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="curriculum:${curriculumList}">
+                    <td th:text="${curriculum.id}"></td>
+                    <td th:text="${curriculum.teacherMessage.userAccount}"></td>
+                    <td th:text="${curriculum.curriculumName}"></td>
+                    <td th:text="${curriculum.place}"></td>
+                    <td th:text="${curriculum.introduce}"></td>
+                    <td th:text="${curriculum.timeStart}"></td>
+                    <td th:text="${curriculum.timeEnd}"></td>
+                    <td th:text="${curriculum.timeLength}"></td>
+                    <td th:text="${curriculum.userNum}"></td>
+                    <td th:text="${curriculum.joinUserNum}"></td>
+                    <td th:if="${curriculum.joinUserNum == curriculum.userNum && session.userInfo.userLv != '1'}">满员</td>
+                    <td th:if="${curriculum.joinUserNum < curriculum.userNum && session.userInfo.userLv != '1'}">
+                        <button class="student_add_curriculum btn-slide-line" name="tablebutton"
+                               th:attr="id=${curriculum.id},
+                            curriculumName=${curriculum.curriculumName},
+                            teacher-id=${curriculum.teacherMessage.userId},
+                            user-name=${session.userInfo.userName},
+                            user-id=${session.userInfo.userId}" value="申请"><span>申请</span></button>
+                    </td>
+                    <td th:if="${session.userInfo.userLv == '1'}" style="display: flex;justify-content: space-evenly;align-items: center;">
+                        <button class="teacher_up_curriculum btn-slide-line" name="tablebutton"
+                               th:attr="id=${curriculum.id},
+                            curriculumName=${curriculum.curriculumName},
+                            place=${curriculum.place},
+                            introduce=${curriculum.introduce},
+                            timeStart=${curriculum.timeStart},
+                            timeEnd=${curriculum.timeEnd},
+                            timeLength=${curriculum.timeLength},
+                            userNum=${curriculum.userNum},
+                            teacher-id=${curriculum.teacherMessage.userId},
+                            user-name=${session.userInfo.userName},
+                            user-id=${session.userInfo.userId}" value="修改"><span>修改</span></button>
+                        <button class="teacher_del_curriculum btn-slide-line" name="tablebutton"
+                               th:attr="id=${curriculum.id},
+                            curriculumName=${curriculum.curriculumName},
+                            teacher-id=${curriculum.teacherMessage.userId},
+                            user-name=${session.userInfo.userName},
+                            user-id=${session.userInfo.userId}" value="删除"><span>删除</span></button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

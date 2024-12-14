@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lxq.model.dao.CourseApplicationDAO">
+
+    <select id="getAllCourseApplication" resultType="com.lxq.model.object.CourseApplication">
+        select * from course_application
+        <where>
+            <if test="id !=null">
+                and id = #{id}
+            </if>
+            <if test="time !=null">
+                and time = #{time}
+            </if>
+            <if test="teacherId !=null">
+                and teacherId = #{teacherId}
+            </if>
+            <if test="userId !=null">
+                and userId = #{userId}
+            </if>
+            <if test="curriculumId !=null">
+                and curriculumId = #{curriculumId}
+            </if>
+            <if test="state !=null">
+                and state = #{state}
+            </if>
+
+            <if test="content !=null">
+                and content like CONCAT('%', #{content}, '%')
+            </if>
+            <if test="remarks !=null">
+                and remarks like CONCAT('%', #{remarks}, '%')
+            </if>
+        </where>
+
+    </select>
+    <select id="getCourseApplication" resultType="com.lxq.model.object.CourseApplication">
+        select * from course_application
+        <where>
+            <if test="id !=null">
+                and id = #{id}
+            </if>
+            <if test="time !=null">
+                and time = #{time}
+            </if>
+            <if test="teacherId !=null">
+                and teacherId = #{teacherId}
+            </if>
+            <if test="userId !=null">
+                and userId = #{userId}
+            </if>
+            <if test="curriculumId !=null">
+                and curriculumId = #{curriculumId}
+            </if>
+            <if test="state !=null">
+                and state = #{state}
+            </if>
+
+            <if test="content !=null">
+                and content like CONCAT('%', #{content}, '%')
+            </if>
+            <if test="remarks !=null">
+                and remarks like CONCAT('%', #{remarks}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="getCourseApplicationbyPrimary" resultType="com.lxq.model.object.CourseApplication">
+        select * from course_application
+        <where>
+            <if test="teacherId !=null">
+                and teacherId = #{teacherId}
+            </if>
+            <if test="userId !=null">
+                and userId = #{userId}
+            </if>
+            <if test="curriculumId !=null">
+                and curriculumId = #{curriculumId}
+            </if>
+        </where>
+    </select>
+
+
+    <insert id="addCourseApplication"  parameterType="com.lxq.model.object.CourseApplication">
+        insert into course_application(teacherId,userId,curriculumId,content,state,remarks,time)
+        values(#{teacherId},#{userId},#{curriculumId},#{content},#{state},#{remarks},#{time})
+    </insert>
+
+    <delete id="delCourseApplication" parameterType="com.lxq.model.object.CourseApplication">
+        delete from course_application
+        where id = #{id}
+    </delete>
+
+    <update id="updateCourseApplication"  parameterType="com.lxq.model.object.CourseApplication">
+        update course_application
+        <set>
+            <if test="teacherId !=null">
+                teacherId = #{teacherId},
+            </if>
+            <if test="userId !=null">
+                userId = #{userId},
+            </if>
+            <if test="curriculumId !=null">
+                curriculumId = #{curriculumId},
+            </if>
+            <if test="content !=null">
+                content = #{content},
+            </if>
+            <if test="state !=null">
+                state = #{state},
+            </if>
+            <if test="remarks !=null">
+                remarks = #{remarks},
+            </if>
+            <if test="time !=null">
+                time = #{time},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+
+</mapper>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lxq.model.dao.RecordDAO">
+
+    <select id="getAllRecord" resultType="com.lxq.model.object.Record">
+        select * from record
+        <where>
+            <if test="id !=null">
+                and id = #{id}
+            </if>
+            <if test="time !=null">
+                and time = #{time}
+            </if>
+            <if test="teacherId !=null">
+                and teacherId = #{teacherId}
+            </if>
+            <if test="userId !=null">
+                and userId = #{userId}
+            </if>
+            <if test="curriculumId !=null">
+                and curriculumId = #{curriculumId}
+            </if>
+            <if test="state !=null">
+                and state like CONCAT('%', #{state}, '%')
+            </if>
+
+            <if test="timeNum !=null">
+                and timeNum = #{timeNum}
+            </if>
+            <if test="timeNumMax !=null">
+                and timeNum <![CDATA[ <= ]]> #{timeNumMax}
+            </if>
+            <if test="timeNumMin !=null">
+                and timeNum <![CDATA[ >= ]]> #{timeNumMin}
+            </if>
+
+            <if test="content !=null">
+                and content like CONCAT('%', #{content}, '%')
+            </if>
+            <if test="remarks !=null">
+                and remarks like CONCAT('%', #{remarks}, '%')
+            </if>
+        </where>
+
+    </select>
+
+    <select id="getRecord" resultType="com.lxq.model.object.Record">
+        select * from record
+        <where>
+            <if test="id !=null">
+                and id = #{id}
+            </if>
+            <if test="time !=null">
+                and time = #{time}
+            </if>
+            <if test="teacherId !=null">
+                and teacherId = #{teacherId}
+            </if>
+            <if test="userId !=null">
+                and userId = #{userId}
+            </if>
+            <if test="curriculumId !=null">
+                and curriculumId = #{curriculumId}
+            </if>
+            <if test="state !=null">
+                and state = #{state}
+            </if>
+             <if test="timeNum !=null">
+                and timeNum = #{timeNum}
+            </if>
+            <if test="timeNumMax !=null">
+                and timeNum <![CDATA[ <= ]]> #{timeNumMax}
+            </if>
+            <if test="timeNumMin !=null">
+                and timeNum <![CDATA[ >= ]]> #{timeNumMin}
+            </if>
+            <if test="content !=null">
+                and content like CONCAT('%', #{content}, '%')
+            </if>
+            <if test="remarks !=null">
+                and remarks like CONCAT('%', #{remarks}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="getRecordbyPrimary" resultType="com.lxq.model.object.Record">
+        select * from record
+        <where>
+            <if test="time !=null">
+                and time = #{time}
+            </if>
+            <if test="teacherId !=null">
+                and teacherId = #{teacherId}
+            </if>
+            <if test="userId !=null">
+                and userId = #{userId}
+            </if>
+            <if test="curriculumId !=null">
+                and curriculumId = #{curriculumId}
+            </if>
+
+        </where>
+    </select>
+
+    <insert id="addRecord"  parameterType="com.lxq.model.object.Record">
+        insert into record(teacherId,userId,curriculumId,content,state,remarks,time,timeNum)
+        values(#{teacherId},#{userId},#{curriculumId},#{content},#{state},#{remarks},#{time},#{timeNum})
+    </insert>
+
+    <delete id="delRecord" parameterType="com.lxq.model.object.Record">
+        delete from record
+        where id = #{id}
+    </delete>
+
+    <update id="updateRecord"  parameterType="com.lxq.model.object.Record">
+        update record
+        <set>
+            <if test="teacherId !=null">
+                teacherId = #{teacherId},
+            </if>
+            <if test="userId !=null">
+                userId = #{userId},
+            </if>
+            <if test="curriculumId !=null">
+                curriculumId = #{curriculumId},
+            </if>
+            <if test="content !=null">
+                content = #{content},
+            </if>
+            <if test="state !=null">
+                state = #{state},
+            </if>
+            <if test="remarks !=null">
+                remarks = #{remarks},
+            </if>
+            <if test="timeNum !=null">
+                timeNum = #{timeNum},
+            </if>
+            <if test="time !=null">
+                time = #{time},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+
+</mapper>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lxq.model.dao.LeaveApplicationDAO">
+
+    <select id="getAllLeaveApplication" resultType="com.lxq.model.object.LeaveApplication">
+        select * from leave_application
+        <where>
+            <if test="id !=null">
+                and id = #{id}
+            </if>
+            <if test="time !=null">
+                and time = #{time}
+            </if>
+            <if test="teacherId !=null">
+                and teacherId = #{teacherId}
+            </if>
+            <if test="userId !=null">
+                and userId = #{userId}
+            </if>
+            <if test="curriculumId !=null">
+                and curriculumId = #{curriculumId}
+            </if>
+            <if test="state !=null">
+                and state = #{state}
+            </if>
+            <if test="timeStart !=null">
+                and timeStart = #{timeStart}
+            </if>
+            <if test="timeEnd !=null">
+                and timeEnd = #{timeEnd}
+            </if>
+            <if test="timeLength !=null">
+                and timeLength = #{timeLength}
+            </if>
+
+            <if test="content !=null">
+                and content like CONCAT(CONCAT('%', #{content}, '%')
+            </if>
+            <if test="remarks !=null">
+                and remarks like CONCAT('%', #{remarks}, '%')
+            </if>
+        </where>
+
+    </select>
+    <select id="getLeaveApplication" resultType="com.lxq.model.object.LeaveApplication">
+        select * from leave_application
+        <where>
+            <if test="id !=null">
+                and id = #{id}
+            </if>
+            <if test="time !=null">
+                and time = #{time}
+            </if>
+            <if test="teacherId !=null">
+                and teacherId = #{teacherId}
+            </if>
+            <if test="userId !=null">
+                and userId = #{userId}
+            </if>
+            <if test="curriculumId !=null">
+                and curriculumId = #{curriculumId}
+            </if>
+            <if test="state !=null">
+                and state = #{state}
+            </if>
+            <if test="timeStart !=null">
+                and timeStart = #{timeStart}
+            </if>
+            <if test="timeEnd !=null">
+                and timeEnd = #{timeEnd}
+            </if>
+            <if test="timeLength !=null">
+                and timeLength = #{timeLength}
+            </if>
+            <if test="content !=null">
+                and content like CONCAT('%', #{content}, '%')
+            </if>
+            <if test="remarks !=null">
+                and remarks like CONCAT(CONCAT('%', #{remarks}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="getLeaveApplicationbyPrimary" resultType="com.lxq.model.object.LeaveApplication">
+        select * from leave_application
+        <where>
+            <if test="teacherId !=null">
+                and teacherId = #{teacherId}
+            </if>
+            <if test="userId !=null">
+                and userId = #{userId}
+            </if>
+            <if test="curriculumId !=null">
+                and curriculumId = #{curriculumId}
+            </if>
+            <if test="timeStart !=null">
+                and timeStart = #{timeStart}
+            </if>
+            <if test="timeEnd !=null">
+                and timeEnd = #{timeEnd}
+            </if>
+        </where>
+    </select>
+
+    <insert id="addLeaveApplication"  parameterType="com.lxq.model.object.LeaveApplication">
+        insert into leave_application(teacherId,userId,curriculumId,content,state,remarks,time,timeStart,timeEnd,timeLength)
+        values(#{teacherId},#{userId},#{curriculumId},#{content},#{state},#{remarks},#{time},#{timeStart},#{timeEnd},#{timeLength})
+    </insert>
+
+    <delete id="delLeaveApplication" parameterType="com.lxq.model.object.LeaveApplication">
+        delete from leave_application
+        where id = #{id}
+    </delete>
+
+    <update id="updateLeaveApplication"  parameterType="com.lxq.model.object.LeaveApplication">
+        update leave_application
+        <set>
+            <if test="teacherId !=null">
+                teacherId = #{teacherId},
+            </if>
+            <if test="userId !=null">
+                userId = #{userId},
+            </if>
+            <if test="curriculumId !=null">
+                curriculumId = #{curriculumId},
+            </if>
+            <if test="content !=null">
+                content = #{content},
+            </if>
+            <if test="state !=null">
+                state = #{state},
+            </if>
+            <if test="remarks !=null">
+                remarks = #{remarks},
+            </if>
+            <if test="timeStart !=null">
+                timeStart = #{timeStart},
+            </if>
+            <if test="timeEnd !=null">
+                timeEnd = #{timeEnd},
+            </if>
+            <if test="timeLength !=null">
+                timeLength = #{timeLength},
+            </if>
+            <if test="time !=null">
+                time = #{time},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+
+</mapper>

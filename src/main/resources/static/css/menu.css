@@ -1,0 +1,121 @@
+.top{
+    height: 40px;
+    text-align: right;
+    line-height: 40px;
+    /*background: #aac751;*/
+    background-color: #85FFBD;
+    background-image: linear-gradient(45deg, #85FFBD 0%, #FFFB7D 100%);
+    /*background: linear-gradient(to right, rgb(44, 62, 80), rgb(166, 120, 136), rgb(196, 90, 84));*/
+    border-bottom: 2px solid #fff;
+    color: #fff;
+    padding-right: 38px;
+}
+.top_left{
+    float: left;
+    line-height: 120px;
+
+}
+.top_left img{
+    width: 300px;
+    height: 100px;
+}
+.top_right{
+    float: right;
+    height: 40px;
+    position: relative;
+}
+.top_right>div{
+    position: absolute;
+    top: 0;
+    right: 0;
+
+}
+.top_right ul{
+    margin-top: 8px;
+}
+.top_right ul a li{
+    margin-top: 3px;
+    border-right: 0px solid #fefefe;
+    width: 75px;
+    height: 13px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #ffffff;
+
+}
+.top_right ul a{
+    float: left;
+    line-height: 13px;
+    text-decoration:none
+
+}
+.top_right ul a li:hover{
+    color: #ffffff;
+}
+.top_right ul a:last-child li{/*去掉最后的边框*/
+    border: none;
+}
+.show_list{
+    position: relative;
+}
+.show_list .move_list{
+    display: none;
+    z-index: 103;
+    top: 56px;
+    left: 0;
+    width: 100%;
+    background: #9d7484;
+    text-align: center;
+    border-radius: 10px;
+    cursor:pointer;
+}
+.show_list .move_list li{
+    padding: 10px 0;
+    width: auto;
+    height: auto;
+    color: #fff;
+}
+.top_right ul a .show_list{
+    padding-bottom: 20px;
+    border-right: none;
+}
+.show_list:hover .move_list{
+    display: block;
+}
+.top_right ul a:nth-child(3){
+    border-left: 1px solid #000;
+}
+.show_list .move_list li:hover{
+    color: white;
+    background: #685b6c;
+    border-radius: 10px;
+}
+
+em,i {
+    font-style: normal
+}
+li {
+    list-style: none
+}
+a{
+    font: 14px/24px Microsoft YaHei,Arial,\\5B8B\4F53,Arial Narrow;
+    letter-spacing: 1.2px;
+    color: #ffffff;
+    text-decoration: none
+}
+a:hover {
+    color: #ffffff;
+}
+
+img {
+    border: 0;
+    vertical-align: middle
+}
+input{
+    outline: none;
+}
+button {
+    cursor: pointer;
+    border:none;
+    outline: none;
+}

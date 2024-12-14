@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lxq.model.dao.CurriculumDAO">
+
+    <select id="getAllCurriculum" resultType="com.lxq.model.object.Curriculum">
+        select * from curriculum
+        <where>
+            <if test="id !=null">
+                and id = #{id}
+            </if>
+    
+            <if test="curriculumName !=null">
+                and curriculumName like CONCAT('%', #{curriculumName}, '%')
+            </if>
+            <if test="introduce !=null">
+                and introduce like CONCAT('%', #{introduce}, '%')
+            </if>
+            <if test="place !=null">
+                and place like CONCAT('%', #{place}, '%')
+            </if>
+            <if test="teacherId !=null">
+                and teacherId like CONCAT('%', #{teacherId}, '%')
+            </if>
+            <if test="timeStart !=null">
+                and timeStart = #{timeStart}
+            </if>
+            <if test="timeEndNum !=null">
+                and timeEndNum = #{timeEndNum}
+            </if>
+            <if test="timeStartNum !=null">
+                and timeStartNum = #{timeStartNum}
+            </if>
+            <if test="timeEnd !=null">
+                and timeEnd = #{timeEnd}
+            </if>
+            <if test="timeLength !=null">
+                and timeLength = #{timeLength}
+            </if>
+            <if test="userNum !=null">
+                and userNum = #{userNum}
+            </if>
+            <if test="joinUserNum !=null">
+                and joinUserNum = #{joinUserNum}
+            </if>
+        </where>
+        ORDER BY `curriculum`.`joinUserNum` ASC
+    </select>
+
+    <select id="getCurriculum" resultType="com.lxq.model.object.Curriculum">
+        select * from curriculum
+        <where>
+            <if test="id !=null">
+                and id = #{id}
+            </if>
+            <if test="teacherId !=null">
+                and teacherId like CONCAT('%', #{teacherId}, '%')
+            </if>
+            <if test="curriculumName !=null">
+                and curriculumName like CONCAT('%', #{curriculumName}, '%')
+            </if>
+            <if test="place !=null">
+                and place like CONCAT('%', #{place}, '%')
+            </if>
+            <if test="introduce !=null">
+                and introduce like CONCAT('%', #{introduce}, '%')
+            </if>
+            <if test="timeStart !=null">
+                and timeStart = #{timeStart}
+            </if>
+            <if test="timeEndNum !=null">
+                and timeEndNum = #{timeEndNum}
+            </if>
+            <if test="timeStartNum !=null">
+                and timeStartNum = #{timeStartNum}
+            </if>
+            <if test="timeEnd !=null">
+                and timeEnd = #{timeEnd}
+            </if>
+            <if test="timeLength !=null">
+                and timeLength = #{timeLength}
+            </if>
+            <if test="userNum !=null">
+                and userNum = #{userNum}
+            </if>
+            <if test="joinUserNum !=null">
+                and joinUserNum = #{joinUserNum}
+            </if>
+
+        </where>
+        ORDER BY `curriculum`.`joinUserNum` ASC
+    </select>
+
+    <select id="getCurriculumbyPrimary" resultType="com.lxq.model.object.Curriculum">
+        select * from curriculum
+        <where>
+
+            <if test="teacherId !=null">
+                and teacherId = #{teacherId}
+            </if>
+            <if test="curriculumName !=null">
+                and curriculumName = #{curriculumName}
+            </if>
+
+        </where>
+        ORDER BY `curriculum`.`joinUserNum` ASC
+    </select>
+
+    <insert id="addCurriculum"  parameterType="com.lxq.model.object.Curriculum">
+        insert into curriculum(teacherId,curriculumName,introduce,timeStart,timeEnd,timeStartNum,timeEndNum,timeLength,userNum,joinUserNum,place)
+        values(#{teacherId},#{curriculumName},#{introduce},#{timeStart},#{timeEnd},#{timeStartNum},#{timeEndNum},#{timeLength},#{userNum},#{joinUserNum},#{place})
+    </insert>
+
+    <delete id="delCurriculum" parameterType="com.lxq.model.object.Curriculum">
+        delete from curriculum
+        where id = #{id}
+    </delete>
+
+    <update id="updateCurriculum"  parameterType="com.lxq.model.object.Curriculum">
+        update curriculum
+        <set>
+            <if test="curriculumName !=null">
+                curriculumName = #{curriculumName},
+            </if>
+            <if test="teacherId !=null">
+                teacherId = #{teacherId},
+            </if>
+            <if test="introduce !=null">
+                introduce = #{introduce},
+            </if>
+            <if test="timeStart !=null">
+                timeStart = #{timeStart},
+            </if>
+            <if test="timeEnd !=null">
+                timeEnd = #{timeEnd},
+            </if>
+            <if test="timeStartNum !=null">
+                timeStartNum = #{timeStartNum},
+            </if>
+            <if test="timeEndNum !=null">
+                timeEndNum = #{timeEndNum},
+            </if>
+            <if test="timeLength !=null">
+                timeLength = #{timeLength},
+            </if>
+            <if test="userNum !=null">
+                userNum = #{userNum},
+            </if>
+            <if test="joinUserNum !=null">
+                joinUserNum = #{joinUserNum},
+            </if>
+            <if test="place !=null">
+                place = #{place},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+
+</mapper>

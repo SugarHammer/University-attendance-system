@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head th:include="baseHeader :: baseHeader">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+</head>
+<body style="background: url('https://ts1.cn.mm.bing.net/th/id/R-C.0cc2527e77bb2be5b2cf80c5631db205?rik=4en4ZTWxzaHI8g&riu=http%3a%2f%2fsc.68design.net%2fqita7%2fCDXCBJ%2fimages%2fSLHW_002020.jpg&ehk=t5DhrqnESFhkfCE0G1Q2trAAdNLU1RmHVsnqOkVygbk%3d&risl=&pid=ImgRaw&r=0')">
+<div class="top">
+    <div class="top_right">
+        <input type="hidden" id="userId" th:value="${session.userInfo.userId}">
+        <ul>
+            <a>
+                <li class="show_list">
+                    <span th:text="${session.userInfo.userName}" style="display: flex;
+                                 flex-wrap: nowrap;
+                                 align-content: center;
+                                 justify-content: center;
+                                 align-items: center;"></span>
+                    <ul class="move_list" style="padding-inline-start: 0px;margin-top: 0px;">
+                        <li>
+                            <span class="exit_login">退出</span>
+                        </li>
+
+                    </ul>
+                </li>
+            </a>
+        </ul>
+    </div>
+</div>
+
+<nav class="navbar navbar-vertical-left" th:include="base :: baseLeft"></nav>
+
+<div class="show-div" th:if="${session.userInfo.userLv} != '0'">
+
+    <div th:fragment="courseApplicationList">
+
+        <header class="htmleaf-header">
+            <h1>X X X 院 校 校 相 关 课 程 申 请 展 示<span>Application and display of related courses in X University</span></h1>
+        </header>
+
+        <div class="add-search-div">
+            <div style="display: flex;justify-content: space-between;flex-direction: row;align-items: center;flex-wrap: nowrap;margin-right: 5%">
+                <div class="serach-div" style="
+                    display: flex;
+                    align-items: flex-start;
+                    justify-content: flex-start;
+                    flex-direction: row;
+                 ">
+                    <label class="select" for="slct" style=";margin-right: 10px">
+                        <select id="slct" required="required" class="courseApplication_search_select">
+                            <option value="false" disabled="disabled" selected="selected">搜索：</option>
+                            <option th:if="${session.userInfo.userLv} == '2'" value="userAccount">老师名称</option>
+                            <option th:if="${session.userInfo.userLv} == '1'" value="userAccount">学生名称</option>
+                            <option value="curriculumName">课程名称</option>
+                            <option value="place">授课地点</option>
+                            <option value="state">状态</option>
+                        </select>
+                        <svg>
+                            <use xlink:href="#select-arrow-down"></use>
+                        </svg>
+                    </label>
+                    <!-- SVG Sprites-->
+                    <svg class="sprites">
+                        <symbol id="select-arrow-down" viewbox="0 0 10 6">
+                            <polyline points="1 1 5 5 9 1"></polyline>
+                        </symbol>
+                    </svg>
+                    <input   required='' name="cssinput" type='text' class="courseApplication_search_value" style="height: 37.37px;width: 200px;margin-right: 10px">
+                    <button class="btn-shine courseApplication_search_button" name="cssbutton" style="height: 37.37px;;margin-right: 10px">
+                        <span>搜索</span>
+                    </button>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="htmleaf-container" style="margin-top: 40px;">
+            <div style="display: flex;justify-content: space-between;align-items: center;margin-bottom: 10px">
+                <p style="margin-left: 0%;margin-bottom: 0px">
+                    <span th:if="${#httpServletRequest.queryString != null && #httpServletRequest.queryString.contains('userAccount')}">
+                        <span th:if="${session.userInfo.userLv} == '1'">按学生名称</span>
+                        <span th:if="${session.userInfo.userLv} == '2'">按老师名称</span>
+                    </span>
+                    <span th:if="${#httpServletRequest.queryString != null && #httpServletRequest.queryString.contains('curriculumName')}">按课程名称</span>
+                    <span th:if="${#httpServletRequest.queryString != null && #httpServletRequest.queryString.contains('state')}">按状态</span>
+                    <span th:if="${#httpServletRequest.queryString != null && #httpServletRequest.queryString.contains('place')}">按授课地点</span>
+                    搜索：
+                    <label class="display_search_name">
+                        <script>
+                            var url = window.location.search;
+
+                            var searchParam = url.indexOf("=")+1;
+                            var searchParamEnd = url.indexOf("&");
+                            var pageNumParam = url.indexOf("pageNum");
+                            if (searchParamEnd == -1){
+                                url = url.substring(searchParam);
+                            }else{
+                                url = url.substring(searchParam,searchParamEnd);
+                            }
+
+                            if(pageNumParam == -1 || pageNumParam > searchParam){
+                                document.write(decodeURI(url));
+                            }
+
+                        </script>
+                    </label>
+                </p>
+                <div id="pageChange" th:if="${pageInfo.pageCount} != '-1'" style="display: flex;align-items: center;justify-content: flex-end;">
+                    <button class="btn-shine prevPage"  th:value="${pageInfo.prevPage}" name="cssbutton" style="height: 30px;width: 80px;">
+                        <span>前一页</span>
+                    </button>
+                    <div style="margin-right:10px;margin-left: 10px">
+                        第
+                        <input type="hidden" class="url" value="">
+                        <input type="hidden" class="pageNum" value="1">
+                        <label class="display_search_name" th:text="${pageInfo.displayPage}"></label>
+                        页 / 共
+                        <label th:text="${pageInfo.pageCount}"></label>
+                        页
+                    </div>
+                    <button class="btn-shine nextPage" th:value="${pageInfo.nextPage}" name="cssbutton" style="height: 30px;width: 80px">
+                        <span>后一页</span>
+                    </button>
+                    <script>
+                        var searchParam = window.location.search;
+                        var url = window.location.href;
+                        if (searchParam.indexOf("pageNum") == -1){
+                            searchParam = 1;
+                        }else{
+                            searchParam = searchParam.substring(searchParam.indexOf("pageNum")+8);
+                            url = url.substring(0,url.indexOf("pageNum"));
+                        }
+                        $('.url').val(url);
+
+                        $('.prevPage').attr('disabled',false);
+                        $('.nextPage').attr('disabled',false);
+                        if ($('.prevPage').val()==-1){
+                            $('.prevPage').attr('disabled',true);
+                        }
+                        if ($('.nextPage').val()==-1){
+                            $('.nextPage').attr('disabled',true);
+                        }
+
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="htmleaf-container table-wrapper" style="margin-top: 10px;overflow-x:scroll;">
+            <table class="fl-table">
+                <thead>
+                <tr>
+                    <th>申請ID</th>
+                    <th>学生名称</th>
+                    <th>教师名称</th>
+                    <th>课程名称</th>
+                    <th>课程地点</th>
+                    <th>课程介绍</th>
+                    <th>开始时间</th>
+                    <th>结束时间</th>
+                    <th>课时长度</th>
+                    <th>限定人数</th>
+                    <th>已有人数</th>
+                    <th>申请内容</th>
+                    <th>反馈信息</th>
+                    <th>状态</th>
+                    <th>申请时间</th>
+                    <th scope="2">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="courseApplication:${courseApplicationList}">
+                    <td th:text="${courseApplication.id}"></td>
+
+                    <td th:if="${courseApplication.studentMessage != null}" th:text="${courseApplication.studentMessage.userAccount}"></td>
+                    <td th:if="${courseApplication.studentMessage == null}">学生不存在</td>
+
+                    <td th:if="${courseApplication.teacherMessage != null}" th:text="${courseApplication.teacherMessage.userAccount}"></td>
+                    <td th:if="${courseApplication.teacherMessage == null}">教师不存在</td>
+
+                    <span th:if="${courseApplication.curriculumMessage != null}">
+                        <td th:text="${courseApplication.curriculumMessage.curriculumName}"></td>
+                        <td th:text="${courseApplication.curriculumMessage.place}"></td>
+                        <td th:text="${courseApplication.curriculumMessage.introduce}"></td>
+                        <td th:text="${courseApplication.curriculumMessage.timeStart}"></td>
+                        <td th:text="${courseApplication.curriculumMessage.timeEnd}"></td>
+                        <td th:text="${courseApplication.curriculumMessage.timeLength}"></td>
+                        <td th:text="${courseApplication.curriculumMessage.userNum}"></td>
+                        <td th:text="${courseApplication.curriculumMessage.joinUserNum}"></td>
+                    </span>
+                    <span th:if="${courseApplication.curriculumMessage == null}">
+                        <td>课程已删除</td>
+                        <td>课程已删除</td>
+                        <td>课程已删除</td>
+                        <td>课程已删除</td>
+                        <td>课程已删除</td>
+                        <td>课程已删除</td>
+                        <td>课程已删除</td>
+                        <td>课程已删除</td>
+                    </span>
+
+                    <td th:text="${courseApplication.content}"></td>
+                    <td th:text="${courseApplication.remarks}"></td>
+                    <td th:text="${courseApplication.state}"></td>
+                    <td th:text="${courseApplication.time}"></td>
+
+                    <span th:if="${courseApplication.curriculumMessage != null}">
+                        <td th:if="${ courseApplication.state == '申请'  && session.userInfo.userLv == '2'}">
+                        <button class="student_up_courseApplication_false btn-slide-line" name="tablebutton"
+                               th:attr="id=${courseApplication.id}" value="取消"><span>取消</span></button>
+
+                    </td>
+                        <td th:if="${ courseApplication.state == '取消' && session.userInfo.userLv == '2'}">
+                            <button class="student_up_courseApplication_del btn-slide-line" name="tablebutton"
+                                   th:attr="id=${courseApplication.id}" value="删除"><span>删除</span></button>
+
+                        </td>
+
+                        <td th:if="${ courseApplication.state == '拒绝' && session.userInfo.userLv == '2'}">
+                            <button class="student_up_courseApplication_again btn-slide-line" name="tablebutton"
+                                   th:attr="id=${courseApplication.id}" value="重新申请"><span>重新申请</span></button>
+                        </td>
+                        <td th:if="${ courseApplication.state == '同意' && session.userInfo.userLv == '2'}">
+
+                        </td>
+
+                        <td th:if="${courseApplication.state == '申请' && session.userInfo.userLv == '1'}" style="display: flex;justify-content: space-evenly;align-items: center;">
+                            <button class="teacher_up_courseApplication_true btn-slide-line" name="tablebutton"
+                                   th:attr="id=${courseApplication.id}" value="同意"><span>同意</span></button>
+                            <button class="teacher_up_courseApplication_false btn-slide-line" name="tablebutton"
+                                   th:attr="id=${courseApplication.id}" value="拒绝"><span>拒绝</span></button>
+                        </td>
+                        <td th:if="${courseApplication.state == '取消' && session.userInfo.userLv == '1'}">
+                            <button class="teacher_up_courseApplication_del btn-slide-line" name="tablebutton"
+                                   th:attr="id=${courseApplication.id}" value="删除"><span>删除</span></button>
+                        </td>
+                        <td th:if="${(courseApplication.state == '同意' || courseApplication.state == '拒绝')  && session.userInfo.userLv == '1'}">
+
+                        </td>
+                    </span>
+                    <span th:if="${courseApplication.curriculumMessage == null}">
+                        <td>无法操作</td>
+                    </span>
+
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
+
+

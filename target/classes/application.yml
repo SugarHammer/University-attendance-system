@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/student-ance-systattendem?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: LEGACYHTML5
+    encoding: UTF-8
+    cache: false
+    servlet:
+      content-type: text/html
+mybatis:
+  #配置mapping所在的路径
+  mapper-locations: classpath:/mapper/*.xml
+  #配置映射类所在的路径
+  type-aliases-package: com.lxq.model.object
+
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#项目启动端口
+server:
+    port: 8080

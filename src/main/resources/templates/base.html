@@ -1,0 +1,73 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+</head>
+<body>
+<nav class="navbar navbar-vertical-left" th:fragment="baseLeft">
+    <ul class="nav navbar-nav">
+        <li th:if="${session.userInfo.userLv} == '0'" class=""th:class="${active == 'userIndex'} ? 'active' : '' ">
+            <a onclick="userIndex()">
+                <i class="fa fa-fw fa-lg fa-home" style="color: orangered"></i>
+                <span>用户管理</span>
+            </a>
+        </li>
+        <li th:if="${session.userInfo.userLv} == '1'" class=""th:class="${active == 'systemIndex'} ? 'active' : '' ">
+            <a onclick="systemIndex()">
+                <i class="fa fa-fw fa-lg fa-laptop" style="color:orangered"></i>
+                <span>课程管理</span>
+            </a>
+        </li>
+        <li th:if="${session.userInfo.userLv} == '1'" class=""th:class="${active == 'recordIndex'} ? 'active' : '' ">
+            <a onclick="recordIndex()">
+                <i class="fa fa-fw fa-lg fa-calendar-check-o" style="color: darkorange"></i>
+                <span>学生考勤</span>
+            </a>
+        </li>
+        <li th:if="${session.userInfo.userLv} == '1'" class=""th:class="${active == 'courseApplicationIndex'} ? 'active' : '' ">
+            <a onclick="courseApplicationIndex()">
+                <i class="fa fa-fw fa-lg fa-book" style="color: #4898d5"></i>
+                <span>报名管理</span>
+            </a>
+        </li>
+        <li th:if="${session.userInfo.userLv} == '1'" class=""th:class="${active == 'leaveApplicationIndex'} ? 'active' : '' ">
+            <a onclick="leaveApplicationIndex()">
+                <i class="fa fa-fw fa-lg fa-check-square-o" style="color: forestgreen" ></i>
+                <span>请假管理</span>
+            </a>
+        </li>
+
+        <li th:if="${session.userInfo.userLv} == '2'" class=""th:class="${active == 'systemIndex'} ? 'active' : '' ">
+            <a href="/index/systemIndex">
+                <i class="fa fa-fw fa-lg fa-laptop" style="color: orangered"></i>
+                <span>课程查看</span>
+            </a>
+        </li>
+        <li th:if="${session.userInfo.userLv} == '2'" class=""th:class="${active == 'recordIndex'} ? 'active' : '' ">
+            <a onclick="recordIndex()">
+                <i class="fa fa-fw fa-lg fa-calendar-check-o" style="color: darkorange"></i>
+                <span>查看考勤</span>
+            </a>
+        </li>
+        <li th:if="${session.userInfo.userLv} == '2'" class=""th:class="${active == 'courseApplicationIndex'} ? 'active' : '' ">
+            <a onclick="courseApplicationIndex()">
+                <i class="fa fa-fw fa-lg fa-book" style="color: #4898d5"></i>
+                <span>课程申请</span>
+            </a>
+        </li>
+        <li th:if="${session.userInfo.userLv} == '2'"  class=""th:class="${active == 'leaveApplicationIndex'} ? 'active' : '' ">
+            <a onclick="leaveApplicationIndex()">
+                <i class="fa fa-fw fa-lg fa-check-square-o" style="color: forestgreen"></i>
+                <span>请假申请</span>
+            </a>
+        </li>
+        <li th:if="${session.userInfo.userLv} != '0'" class=""th:class="${active == 'userIndex'} ? 'active' : '' ">
+            <a onclick="userIndex()">
+                <i class="fa fa-fw fa-lg fa-user" aria-hidden="true" style="color: mediumpurple"></i>
+                <span>个人信息</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+</body>
+</html>

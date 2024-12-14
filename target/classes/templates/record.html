@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head th:include="baseHeader :: baseHeader">
+
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+</head>
+<body style="background: url('https://ts1.cn.mm.bing.net/th/id/R-C.0cc2527e77bb2be5b2cf80c5631db205?rik=4en4ZTWxzaHI8g&riu=http%3a%2f%2fsc.68design.net%2fqita7%2fCDXCBJ%2fimages%2fSLHW_002020.jpg&ehk=t5DhrqnESFhkfCE0G1Q2trAAdNLU1RmHVsnqOkVygbk%3d&risl=&pid=ImgRaw&r=0')">
+<div class="top">
+    <div class="top_right">
+        <input type="hidden" id="userId" th:value="${session.userInfo.userId}">
+        <ul>
+            <a>
+                <li class="show_list">
+                    <span th:text="${session.userInfo.userName}" style="display: flex;
+                                 flex-wrap: nowrap;
+                                 align-content: center;
+                                 justify-content: center;
+                                 align-items: center;"></span>
+                    <ul class="move_list" style="padding-inline-start: 0px;margin-top: 0px;">
+                        <li>
+                            <span class="exit_login">退出</span>
+                        </li>
+
+                    </ul>
+                </li>
+            </a>
+        </ul>
+    </div>
+</div>
+<nav class="navbar navbar-vertical-left" th:include="base :: baseLeft"></nav>
+<div class="show-div" th:if="${session.userInfo.userLv} != '0'">
+
+    <div th:fragment="recordList">
+        <header class="htmleaf-header">
+            <h1>X X X 院 校 校 学 生 考 勤 信 息 展 示<span>Application and display of related courses in X University</span></h1>
+        </header>
+
+        <div class="add-search-div">
+            <div style="display: flex;justify-content: space-between;flex-direction: row;align-items: center;flex-wrap: nowrap;margin-right: 5%">
+                <div class="serach-div" style="
+                    display: flex;
+                    align-items: flex-start;
+                    justify-content: flex-start;
+                    flex-direction: row;
+                    margin-right: 5%;
+                 ">
+                    <label class="select" for="slct" style=";margin-right: 10px">
+                        <select id="slct" required="required" class="record_search_select" onchange="changeFunc()">
+                            <option value="false" disabled="disabled" selected="selected">搜索：</option>
+                            <option value="time">时间</option>
+                            <option th:if="${session.userInfo.userLv} == '1'" value="userAccount">学生名称</option>
+                            <option th:if="${session.userInfo.userLv} == '2'" value="userAccount">老师名称</option>
+                            <option value="curriculumName">课程名称</option>
+                            <option value="state">状态</option>
+                        </select>
+                        <svg>
+                            <use xlink:href="#select-arrow-down"></use>
+                        </svg>
+                    </label>
+                    <!-- SVG Sprites-->
+                    <svg class="sprites">
+                        <symbol id="select-arrow-down" viewbox="0 0 10 6">
+                            <polyline points="1 1 5 5 9 1"></polyline>
+                        </symbol>
+                    </svg>
+                    <input   required='' name="cssinput" type='text' id="record_time" class="record_search_value" style="height: 37.37px;width: 230px;margin-right: 10px;display: none">
+                    <input   required='' name="cssinput" type='text' id="record_other" class="record_search_value" style="height: 37.37px;width: 200px;margin-right: 10px">
+                    <button class="btn-shine record_search_button" name="cssbutton" style="height: 37.37px;margin-right: 10px">
+                        <span>搜索</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="htmleaf-container" style="margin-top: 40px;">
+            <div style="display: flex;justify-content: space-between;align-items: center;margin-bottom: 10px">
+                <p style="margin-left: 0%;margin-bottom: 0px">
+                    <span th:if="${#httpServletRequest.queryString != null && #httpServletRequest.queryString.contains('time')}">按时间范围</span>
+                    <span th:if="${#httpServletRequest.queryString != null && #httpServletRequest.queryString.contains('userAccount')}">
+                        <span th:if="${session.userInfo.userLv} == '1'">按学生名称</span>
+                        <span th:if="${session.userInfo.userLv} == '2'">按老师名称</span>
+                    </span>
+                    <span th:if="${#httpServletRequest.queryString != null && #httpServletRequest.queryString.contains('curriculumName')}">按课程名称</span>
+                    <span th:if="${#httpServletRequest.queryString != null && #httpServletRequest.queryString.contains('state')}">按状态</span>
+                    搜索：
+                    <label class="display_search_name">
+                        <script>
+                            var url = window.location.search;
+
+                            var searchParam = url.indexOf("=")+1;
+                            var searchParamEnd = url.indexOf("&");
+                            var pageNumParam = url.indexOf("pageNum");
+                            if (searchParamEnd == -1){
+                                url = url.substring(searchParam);
+                            }else{
+                                url = url.substring(searchParam,searchParamEnd);
+                            }
+
+                            if(pageNumParam == -1 || pageNumParam > searchParam){
+                                document.write(decodeURI(url));
+                            }
+
+                        </script>
+                    </label>
+                </p>
+                <div id="pageChange" th:if="${pageInfo.pageCount} != '-1'" style="display: flex;align-items: center;justify-content: flex-end;">
+                    <button class="btn-shine prevPage"  th:value="${pageInfo.prevPage}" name="cssbutton" style="height: 30px;width: 80px;">
+                        <span>前一页</span>
+                    </button>
+                    <div style="margin-right:10px;margin-left: 10px">
+                        第
+                        <input type="hidden" class="url" value="">
+                        <input type="hidden" class="pageNum" value="1">
+                        <label class="display_search_name" th:text="${pageInfo.displayPage}"></label>
+                        页 / 共
+                        <label th:text="${pageInfo.pageCount}"></label>
+                        页
+                    </div>
+                    <button class="btn-shine nextPage" th:value="${pageInfo.nextPage}" name="cssbutton" style="height: 30px;width: 80px">
+                        <span>后一页</span>
+                    </button>
+                    <script>
+                        var searchParam = window.location.search;
+                        var url = window.location.href;
+                        if (searchParam.indexOf("pageNum") == -1){
+                            searchParam = 1;
+                        }else{
+                            searchParam = searchParam.substring(searchParam.indexOf("pageNum")+8);
+                            url = url.substring(0,url.indexOf("pageNum"));
+                        }
+                        $('.url').val(url);
+
+                        $('.prevPage').attr('disabled',false);
+                        $('.nextPage').attr('disabled',false);
+                        if ($('.prevPage').val()==-1){
+                            $('.prevPage').attr('disabled',true);
+                        }
+                        if ($('.nextPage').val()==-1){
+                            $('.nextPage').attr('disabled',true);
+                        }
+
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="htmleaf-container table-wrapper" style="margin-top: 10px;overflow-x:scroll;">
+            <table class="fl-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>考勤时间</th>
+                    <th>学生名称</th>
+                    <th>老师名称</th>
+                    <th>课程名称</th>
+                    <th>考勤状态</th>
+                    <th scope="2">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="record:${recordList}" class="result">
+                    <td th:text="${record.id}"></td>
+                    <td th:text="${record.time}"></td>
+
+                    <td th:if="${record.studentMessage != null}" th:text="${record.studentMessage.userAccount}"></td>
+                    <td th:if="${record.studentMessage == null}">学生不存在</td>
+
+                    <td th:if="${record.teacherMessage != null}" th:text="${record.teacherMessage.userAccount}"></td>
+                    <td th:if="${record.teacherMessage == null}">教师不存在</td>
+
+                    <td th:if="${record.curriculumMessage != null}" th:text="${record.curriculumMessage.curriculumName}"></td>
+                    <td th:if="${record.curriculumMessage == null}">课程已删除</td>
+
+                    <td th:text="${record.state}"></td>
+
+                    <span th:if="${record.curriculumMessage != null}">
+                        <td th:if="${session.userInfo.userLv == '2'}"></td>
+
+                        <td th:if="${record.state == '待打卡' && session.userInfo.userLv == '1'}" style="display: flex;justify-content: space-evenly;align-items: center;">
+                            <button class="teacher_up_record_true btn-slide-line" name="tablebutton"
+                                    th:attr="id=${record.id}" value="打卡"><span>打卡</span></button>
+                            <button class="teacher_up_record_false btn-slide-line" name="tablebutton"
+                                    th:attr="id=${record.id}" value="缺勤"><span>缺勤</span></button>
+                        </td>
+                        <td th:if="${record.state != '待打卡' && session.userInfo.userLv == '1'}"></td>
+                    </span>
+                    <span th:if="${record.curriculumMessage == null}">
+                        <td>无法操作</td>
+                    </span>
+
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+</div>
+</body>
+</html>
+
+<script>
+    function changeFunc(){
+        if ($.trim($('.record_search_select option:selected').val()) != 'time'){
+            $('#record_other').css('display','block');
+            $('#record_time').css('display','none');
+        }else{
+            $('#record_other').css('display','none');
+            $('#record_time').css('display','block');
+        }
+    }
+
+    $('#record_time').daterangepicker({
+        opens:'right',
+        autoUpdateInput:'false',
+        locale: {
+            format: "YYYY-MM-DD",
+            separator: " to ",
+            applyLabel: '应用',
+            cancelLabel: '取消',
+            daysOfWeek: ["日","一","二","三","四","五","六"],
+            monthNames: ["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"]
+        }
+    }).on('cancel.daterangepicker', function(ev, picker) {
+        layer.msg("取消");
+        $("#record_time").val("请选择日期范围");
+    });
+</script>

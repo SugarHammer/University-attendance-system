@@ -1,0 +1,111 @@
+input[type="text"][name="cssinput"] {
+    box-sizing: border-box;
+    width: 100%;
+    height: calc(3em + 2px);
+    margin: 0 0 1em;
+    padding: 1em;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background: #fff;
+    resize: none;
+    outline: none;
+}
+input[type="text"][name="cssinput"][required]:focus {
+    outline: none;
+    border-color: #07f;
+    box-shadow: 0 0 0 2px rgba(0,119,255,0.2);
+}
+input[type="text"][name="cssinput"][required]:focus + label[name="search_label"][placeholder]:before {
+    color: #00bafa;
+}
+input[type="text"][name="cssinput"][required]:focus + label[name="search_label"][placeholder]:before,
+input[type="text"][name="cssinput"][required]:valid + label[name="search_label"][placeholder]:before {
+    transition-duration: 0.2s;
+    transform: translate(0, -1.5em) scale(0.9, 0.9);
+}
+input[type="text"][name="cssinput"][required]:invalid + label[name="search_label"][placeholder][alt]:before {
+    content: attr(alt);
+}
+input[type="text"][name="cssinput"][required] + label[name="search_label"][placeholder] {
+    display: block;
+    pointer-events: none;
+    line-height: 1.25em;
+    margin-top: calc(-3em - 2px);
+    margin-bottom: calc((3em - 1em) + 2px);
+}
+input[type="text"][name="cssinput"][required] + label[name="search_label"][placeholder]:before {
+    content: attr(placeholder);
+    display: inline-block;
+    margin: 0 calc(1em + 2px);
+    padding: 0 2px;
+    color: #898989;
+    white-space: nowrap;
+    transition: 0.3s ease-in-out;
+    background-image: linear-gradient(to bottom, #fff, #fff);
+    background-size: 100% 5px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
+textarea[name="layertext"] {
+    box-sizing: border-box;
+    width: 100%;
+    height: 5em;
+    padding: 1em;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background: #fff;
+    resize: none;
+    outline: none;
+}
+textarea[name="layertext"]:focus {
+    outline: none;
+    border-color: #0077ff;
+    box-shadow: 0 0 0 2px rgba(0, 119, 255, 0.2);
+}
+input[name="layerinput" ] {
+    box-sizing: border-box;
+    width: 100%;
+    height: calc(3em + 2px);
+    padding: 1em;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background: #fff;
+    resize: none;
+    outline: none;
+}
+input[name="layerinput" ]:focus {
+    outline: none;
+    border-color: #07f;
+    box-shadow: 0 0 0 2px rgba(0,119,255,0.2);
+}
+input[name="layerinput" ]:focus + label[name="search_label"][placeholder]:before,
+input[name="layerinput" ]:valid + label[name="search_label"][placeholder]:before {
+    transition-duration: 0.2s;
+    transform: translate(0, -1.5em) scale(0.9, 0.9);
+}
+input[name="layerinput" ]:invalid + label[name="search_label"][placeholder][alt]:before {
+    content: attr(alt);
+}
+input[name="layerinput" ]  + label[name="search_label"][placeholder] {
+    display: block;
+    pointer-events: none;
+    line-height: 1.25em;
+    margin-top: calc(-3em - 2px);
+    margin-bottom: calc((3em - 1em) + 2px);
+}
+input[name="layerinput" ] + label[name="search_label"][placeholder]:before {
+    content: attr(placeholder);
+    display: inline-block;
+    margin: 0 calc(1em + 2px);
+    padding: 0 2px;
+    color: #898989;
+    white-space: nowrap;
+    transition: 0.3s ease-in-out;
+    background-image: linear-gradient(to bottom, #fff, #fff);
+    background-size: 100% 5px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
